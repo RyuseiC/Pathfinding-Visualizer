@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <center>
+      <header>Path Finding Visualizer</header>
+      <select id="algorithm">
+        <option selected disabled>Choose algorithm</option>
+        <option value="BFS">Breadth First Search Algorithm</option>
+        <option value="SPF">Dijkstra's Shortest Path Finding Algorithm</option>
+        <option value="ASTAR">A* Search Algorithm</option>
+      </select>
+      <input type="submit" id="run" value="Run" onclick="run()"/>
+      <input type="submit" id="resetGrid" value="Reset Grid" onclick="resetGrid()"/>
+      <input type="submit" id="clearWalls" value="Clear Walls & Weights" onclick="clearWallsWeights()"/>
+      <input type="submit" id="clearPath" value="Clear Path" onclick="clearPath()"/>
+      <p>Press W to toggle between drawing walls and drawing weights. Defaulted to drawing walls.</p>
+      <table id="grid"></table>
+    </center>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="main.css"></style>
+  </body>
+</html>
