@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pathfinding Visualizer</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="./getmdl-select/getmdl-select.min.css">
+    <script defer src="./getmdl-select/getmdl-select.min.js"></script>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="images/favicon.png" type="images" sizes="16x16">
+  </head>
+  <body>
+    <header class="mdl-layout__header">
+      <a href='https://github.com/RyuseiC/Pathfinding-Visualizer' target="_blank">About</a>
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">Pathfinding Visualizer</span>
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height" style="width: 350px;">
+          <input id="selected" type="text" value="" class="mdl-textfield__input" readonly>
+          <input type="hidden" value="" name="algorithm">
+          <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+          <label for="algorithm" class="mdl-textfield__label">Algorithm</label>
+          <ul for="algorithm" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+              <li class="mdl-menu__item" data-val="BFS">Breadth-First Search Algorithm</li>
+              <li class="mdl-menu__item" data-val="DSPF">Dijkstra's Shortest Path Finding Algorithm</li>
+              <li class="mdl-menu__item" data-val="ASTAR">A* (A-Star) Search Algorithm</li>
+              <li class="mdl-menu__item" data-val="">Depth-First Search Maze Generator</li>
+          </ul>
+        </div>
+        <button id="info" class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect">
+          <i class="material-icons">info</i>
+        </button>
+        <div class="mdl-layout-spacer"></div>
+        <div id="controls">
+          <button id="visualize" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" class="control">
+            Visualize
+          </button>
+          <button id="resetGrid" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" class="control">
+            Reset Grid
+          </button>
+          <button id="clearWallsAndWeights" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" class="control">
+            Clear Walls & Weights
+          </button>
+          <button id="clearPath" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" class="control">
+            Clear Path
+          </button>
+        </div>
+      </div>
+      <div class="mdl-layout__header-row">
+        <table><tr><td class="start noHighlight" style="border: none">&nbsp;</td></tr></table>&#160;Start Node&#160;
+        <table><tr><td class="goal noHighlight" style="border: none">&nbsp;</td></tr></table>&#160;Goal Node&#160;
+        <table><tr><td class="wall noHighlight">&nbsp;</td></tr></table>&#160;Wall Node&#160;
+        <table><tr><td class="weight noHighlight" style="border: none">&nbsp;</td></tr></table>&#160;Weight Node&#160;
+        <table><tr><td class="noHighlight">&nbsp;</td></tr></table>&#160;Unvisited Node&#160;
+        <table><tr><td class="visited noHighlight" style="border: none">&nbsp;</td></tr></table>&#160;Visited Node&#160;
+        <table><tr><td class="shortestPath noHighlight">&nbsp;</td></tr></table>&#160;Shortest-path Node
+        <div class="mdl-layout-spacer"></div>
+        <div id="slider" style="width: 300px">
+          <center>
+            Weight
+            <input class="mdl-slider mdl-js-slider" type="range" id="weightSlider" min="5" max="25" value="5" oninput="showMessage(this.value)" onchange="showMessage(this.value)">
+            <span id="weight">5</span>
+          </center>
+        </div>
+      </div>
+    </header>
+    <!-- <div id="welcome" class="demo-card-wide mdl-card mdl-shadow--2dp" style="visibility: hidden;">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Welcome</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Mauris sagittis pellentesque lacus eleifend lacinia...
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Get Started
+        </a>
+      </div>
+    </div> -->
+    <!-- <span>Click and drag to draw. Press W to toggle between drawing walls and drawing weights. Defaulted to drawing walls.</span> -->
+    <table id="grid"></table>
+    <script langauage="javascript">
+      function showMessage(value) {
+        document.getElementById("weight").innerHTML = value;
+      }
+    </script>
+    <script src="main.js"></script>
+    <script src="algorithms/bfs.js"></script>
+    <script src="algorithms/dspf.js"></script>
+    <script src="algorithms/astar.js"></script>
+    <script src="algorithms/algorithmsUtil.js"></script>
+  </body>
+</html>
