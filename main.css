@@ -23,6 +23,7 @@ td {
 }
 
 [class="start"], .start.noHighlight {
+  cursor: pointer;
   background-color: transparent;
   background-image: url('images/start.png');
   background-position: center;
@@ -33,6 +34,7 @@ td {
 }
 
 .start {
+  cursor: pointer;
   background-color: transparent;
   background-image: url('images/start.png');
   background-position: center;
@@ -41,6 +43,7 @@ td {
 }
 
 [class="goal"], .goal.noHighlight {
+  cursor: pointer;
   background-color: transparent;
   background-image: url('images/goal.png');
   background-position: center;
@@ -51,6 +54,7 @@ td {
 }
 
 .goal {
+  cursor: pointer;
   background-color: transparent;
   background-image: url('images/goal.png');
   background-position: center;

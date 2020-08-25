@@ -127,7 +127,7 @@ function visualize(gameState) {
   if (gameState.algorithm !== '') {
     if (gameState.algorithm === 'Breadth-First Search Algorithm') {
       gameState.algorithm = 'BFS';
-    } else if (gameState.algorithm === "Dijkstra's Shortest Path Finding Algorithm") {
+    } else if (gameState.algorithm === "Dijkstra's Shortest Path First Algorithm") {
       gameState.algorithm = 'DSPF';
     } else if (gameState.algorithm === 'A* (A-Star) Search Algorithm') {
       gameState.algorithm = 'ASTAR';
@@ -203,7 +203,7 @@ function drawGrid(totalRows, totalCols, gameState) {
       }
     }
   }
-  document.pointerEvents = 'none'
+  document.pointerEvents = 'none';
   document.addEventListener('keydown', (keyboardEvent) => nodeKeydown(keyboardEvent, gameState));
   convertDOMToJS(grid, gameState);
 }
@@ -212,22 +212,44 @@ document.getElementById('info').addEventListener('click', () => showInfo(gameSta
 document.getElementById('selected').addEventListener('change', () => changeAlgorithm(gameState));
 document.getElementById('weightSlider').addEventListener('change', () => changeWeight(gameState));
 
+function confirm(card) {
+  card.style.visibility = 'hidden';
+}
+
 function showInfo(gameState) {
-  document.getElementById('welcome').style.visibility = 'visible';
+  let card;
+  if (gameState.algorithm === '') {
+    card = document.getElementById('welcome');
+  } else if (gameState.algorithm === 'BFS') {
+    card = document.getElementById('BFSCard');
+  } else if (gameState.algorithm === 'DSPF') {
+    card = document.getElementById('DSPFCard');
+  } else if (gameState.algorithm === 'ASTAR') {
+    card = document.getElementById('ASTARCard');
+  }
+
+  let cards = document.getElementsByClassName('mdl-card')
+  for (let i = 0; i < cards.length; i++) {
+    if (cards[i] !== card) {
+      cards[i].style.visibility = 'hidden';
+    }
+  }
+
+  card.style.visibility = card.style.visibility === 'hidden' ? 'visible' : 'hidden';
 }
 
 function changeAlgorithm(gameState) {
   gameState.algorithm = document.getElementById('selected').value;
   if (gameState.algorithm === 'Breadth-First Search Algorithm') {
     gameState.algorithm = 'BFS';
-    // For BFS, an unweighted algorithm, must eliminate weight nodes as soon as it is selected.
+    // For BFS, an unweighted algorithm, eliminate weight nodes as soon as it is selected.
     for (coordinates in gameState.nodeObjects) {
       gameState.nodeObjects[coordinates].weight
         ? getNode(gameState.nodeObjects[coordinates]).classList.remove('weight')
         : null;
     }
     convertDOMToJS(grid, gameState);
-  } else if (gameState.algorithm === "Dijkstra's Shortest Path Finding Algorithm") {
+  } else if (gameState.algorithm === "Dijkstra's Shortest Path First Algorithm") {
     gameState.algorithm = 'DSPF';
   } else if (gameState.algorithm === 'A* (A-Star) Search Algorithm') {
     gameState.algorithm = 'ASTAR';
