@@ -7,6 +7,17 @@ header {
   font-size: xx-large;
 }
 
+.unweighted {
+  text-decoration-line: line-through;
+  text-decoration-color: red;
+}
+
+.emphasize {
+  font-weight: bold;
+  text-decoration-line: overline;
+  text-decoration-line: underline;
+}
+
 table {
   border-collapse: collapse;
 }

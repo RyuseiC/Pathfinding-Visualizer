@@ -242,17 +242,28 @@ function changeAlgorithm(gameState) {
   gameState.algorithm = document.getElementById('selected').value;
   if (gameState.algorithm === 'Breadth-First Search Algorithm') {
     gameState.algorithm = 'BFS';
+    gameState.selectedWalls = true;
+    gameState.selectedWeights = false;
+
+    let weightLabel = document.getElementById('weightLabel');
+    weightLabel.classList.remove('emphasize');
+
+    let wallLabel = document.getElementById('wallLabel');
+    wallLabel.classList.add('emphasize');
     // For BFS, an unweighted algorithm, eliminate weight nodes as soon as it is selected.
     for (coordinates in gameState.nodeObjects) {
       gameState.nodeObjects[coordinates].weight
         ? getNode(gameState.nodeObjects[coordinates]).classList.remove('weight')
         : null;
     }
+    weightLabel.classList.add('unweighted');
     convertDOMToJS(grid, gameState);
   } else if (gameState.algorithm === "Dijkstra's Shortest Path First Algorithm") {
     gameState.algorithm = 'DSPF';
+    document.getElementById('weightLabel').classList.remove('unweighted');
   } else if (gameState.algorithm === 'A* (A-Star) Search Algorithm') {
     gameState.algorithm = 'ASTAR';
+    document.getElementById('weightLabel').classList.remove('unweighted');
   }
 }
 
@@ -360,7 +371,11 @@ function nodeKeydown(keyboardEvent, gameState) {
   const { selectedWeights, selectedWalls } = gameState;
   if (keyboardEvent.keyCode === 87 && gameState.algorithm !== 'BFS') {
     gameState.selectedWeights = selectedWeights ? false : true;
+    let weightLabel = document.getElementById('weightLabel');
+    gameState.selectedWeights ? weightLabel.classList.add('emphasize') : weightLabel.classList.remove('emphasize');
+    let wallLabel = document.getElementById('wallLabel');
     gameState.selectedWalls = selectedWalls ? false : true;
+    gameState.selectedWalls ? wallLabel.classList.add('emphasize') : wallLabel.classList.remove('emphasize');
   }
 }
 
