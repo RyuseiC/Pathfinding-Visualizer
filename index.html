@@ -18,7 +18,7 @@
   <body>
     <div
       id="welcome"
-      class="demo-card-wide mdl-card mdl-shadow--2dp"
+      class="mdl-card mdl-shadow--4dp"
       style="
         width: 500px;
         height: min-content;
@@ -37,7 +37,9 @@
       </div>
       <div class="mdl-card__supporting-text">
         Instructions: Click and drag on grid to draw walls or weights. Press W to toggle between drawing
-        walls and drawing weights. Click and drag start or goal to move them. Pick an algorithm and enjoy.
+        walls and drawing weights. Click and drag start or goal to move them. Drawing walls/weights or moving
+        the start/goal after an algorithm has visualized will instantly show the final result as you drag your mouse.
+        Pick an algorithm and enjoy.
         <br>
         Notes: A* (A-Star) Search Algorithm and Depth-First Search Maze Generator are in production.
       </div>
@@ -53,7 +55,7 @@
     </div>
     <div
       id="BFSCard"
-      class="demo-card-wide mdl-card mdl-shadow--2dp"
+      class="mdl-card mdl-shadow--2dp"
       style="
         width: 500px;
         height: min-content;
@@ -72,18 +74,17 @@
       </div>
       <div class="mdl-card__supporting-text">
         BFS was originally meant for traversing/searching a tree or graph data structure. It works
-        by checking whether any of the origin's neighbors is the destination. If so, then, the algorithm
-        returns true. If not, then it asks one of its neighbor's the same question to all of the neighbor's neighbors.
+        by checking whether any one of the origin's neighbors is the destination. If so, the algorithm
+        returns true. If not, then it asks one of its neighbors the same question to all of the neighbor's neighbors.
         This cycle is repeated either iteratively or recursively. For the purposes of
-        this site, the algorithm was slightly modified to use what the algorithm learns on its
+        this web tool, the algorithm was slightly modified to use what the algorithm learns on its
         journey in order backtrack its way from the destination to the origin.
-        <a href="https://en.wikipedia.org/wiki/Breadth-first_search">See Wikipedia page</a>
+        <a href="https://en.wikipedia.org/wiki/Breadth-first_search" target="_blank">See Wikipedia page</a>
       </div>
       <div class="mdl-card__actions mdl-card--border" style="text-align: center;">
         <a
           class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
           style="text-align: center;"
-          target="_blank"
           onclick="confirm(this.parentElement.parentElement)"
         >
           Ok
@@ -92,7 +93,7 @@
     </div>
     <div
     id="DSPFCard"
-    class="demo-card-wide mdl-card mdl-shadow--2dp"
+    class="mdl-card mdl-shadow--2dp"
     style="
       width: 500px;
       height: min-content;
@@ -110,22 +111,22 @@
       <h2 class="mdl-card__title-text">Dijkstra's Shortest Path First Algorithm (Weighted)</h2>
     </div>
     <div class="mdl-card__supporting-text">
-      DSPF is very similar to BFS in that it asks the origin's neighbors the question of whether it's the destination
-      or not, and repeats this iteratively or recursively. The difference, however is that DSPF takes into account 
-      so-called weights, otherwise known as traffic or anything that would slow someone down on their way to some place. 
-      It does this by initializing each node except the origin to have a distance of infinity from the origin.
+      DSPF is very similar to BFS in that it asks each of the origin's neighbors the question of whether it's the 
+      destination or not, and repeats this iteratively or recursively. The difference, however is that DSPF takes into
+      account so-called "weights", otherwise known as traffic or anything that would slow someone down on the way to their
+      destination. It does this by initializing each node, except the origin, to have a distance of infinity from the origin.
       The algorithm also uses an array of nodes sorted by their distance from the origin, which gets updated continuously. 
       The algorithm checks the neighbors of the node closest to the start and updates their distances from the origin
-      only if the path to the neighbor is closer than the array says. That distance would be the number of steps it took
-      to get to the node closest to the start added to the number of steps it takes to get to the neighbor. The second
-      addend will be either 1 or the weight of the weight indicated in the slider.
-      <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">See Wikipedia page</a>
+      only if the path to the neighbor is closer than the array says. This distance is the number of steps it takes
+      to get to the node closest to the start, added to the number of steps it takes to get to its neighbor. The second
+      addend will be either 1 or the weight of the weight indicated on the slider. As it turns out,
+      DSPF, or at least a modified version of it, is apparently used by Google Maps.
+      <br><a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank">See Wikipedia page</a>
     </div>
     <div class="mdl-card__actions mdl-card--border" style="text-align: center;">
       <a
         class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
         style="text-align: center;"
-        target="_blank"
         onclick="confirm(this.parentElement.parentElement)"
       >
         Ok
