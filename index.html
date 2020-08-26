@@ -38,6 +38,8 @@
       <div class="mdl-card__supporting-text">
         Instructions: Click and drag on grid to draw walls or weights. Press W to toggle between drawing
         walls and drawing weights. Click and drag start or goal to move them. Pick an algorithm and enjoy.
+        <br>
+        Notes: A* (A-Star) Search Algorithm and Depth-First Search Maze Generator are in production.
       </div>
       <div class="mdl-card__actions mdl-card--border" style="text-align: center;">
         <a
@@ -73,7 +75,7 @@
         by checking whether any of the origin's neighbors is the destination. If so, then, the algorithm
         returns true. If not, then it asks one of its neighbor's the same question to all of the neighbor's neighbors.
         This cycle is repeated either iteratively or recursively. For the purposes of
-        this site, the algorithm was slightly modified to use what the algorithm learned on its
+        this site, the algorithm was slightly modified to use what the algorithm learns on its
         journey in order backtrack its way from the destination to the origin.
         <a href="https://en.wikipedia.org/wiki/Breadth-first_search">See Wikipedia page</a>
       </div>
@@ -207,13 +209,13 @@
             <td class="wall noHighlight">&nbsp;</td>
           </tr>
         </table>
-        <span id="wallLabel" class="emphasize">&#160;Wall Node&#160;</span>
+        &#160;<span id="wallLabel" class="emphasize">Wall Node</span>&#160;
         <table>
           <tr>
             <td class="weight noHighlight" style="border: none;">&nbsp;</td>
           </tr>
         </table>
-        <span id="weightLabel">&#160;Weight Node&#160;</span>
+        &#160;<span id="weightLabel">Weight Node</span>&#160;
         <table>
           <tr>
             <td class="noHighlight">&nbsp;</td>
