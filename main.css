@@ -3,19 +3,25 @@ header {
   background-color: rgb(90, 120, 255) !important;
 }
 
+.mdl-card {
+  width: 45%;
+  height: min-content;
+  top: 50%;
+  margin-top: -10%;
+  left: 50%;
+  margin-left: -21.9%;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  visibility: visible;
+}
+
+.mdl-card__title, .mdl-card__actions, .mdl-button {
+  text-align: center;
+}
+
 .mdl-layout-title {
   font-size: xx-large;
-}
-
-.unweighted {
-  text-decoration-line: line-through;
-  text-decoration-color: red;
-}
-
-.emphasize {
-  font-weight: bold;
-  text-decoration-line: overline;
-  text-decoration-line: underline;
 }
 
 table {
@@ -102,6 +108,17 @@ td {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+.unweighted {
+  text-decoration-line: line-through;
+  text-decoration-color: red;
+}
+
+.emphasize {
+  font-weight: bold;
+  text-decoration-line: overline;
+  text-decoration-line: underline;
 }
 
 @keyframes startGoalWallWeightNodeAnimation {
@@ -216,6 +233,5 @@ td {
 
 .instantShortestPath {
   border-style: none;
-  border-radius: 0%;
   background-color: cyan;
 }

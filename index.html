@@ -16,123 +16,81 @@
     <link rel="icon" href="images/favicon.png" type="images" sizes="16x16" />
   </head>
   <body>
-    <div
-      id="welcome"
-      class="mdl-card mdl-shadow--4dp"
-      style="
-        width: 500px;
-        height: min-content;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-        z-index: 1;
-        visibility: visible;
-      "
-    >
+    <div id="welcome" class="mdl-card mdl-shadow--6dp">
       <div class="mdl-card__title">
         <h2 class="mdl-card__title-text">Welcome</h2>
       </div>
       <div class="mdl-card__supporting-text">
-        Instructions: Click and drag on grid to draw walls or weights. Press W to toggle between drawing
-        walls and drawing weights. Click and drag start or goal to move them. Drawing walls/weights or moving
-        the start/goal after an algorithm has visualized will instantly show the final result as you drag your mouse.
-        Pick an algorithm and enjoy.
-        <br>
+        Instructions: Click and drag on grid to draw walls or weights. Press W to toggle between
+        drawing walls and drawing weights. Click and drag start or goal to move them. Drawing
+        walls/weights or moving the start/goal after an algorithm has visualized will instantly show
+        the final result as you drag your mouse. Pick an algorithm and enjoy.
+        <br />
         Notes: A* (A-Star) Search Algorithm and Depth-First Search Maze Generator are in production.
       </div>
-      <div class="mdl-card__actions mdl-card--border" style="text-align: center;">
+      <div class="mdl-card__actions mdl-card--border">
         <a
           class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-          style="text-align: center;"
           onclick="confirm(this.parentElement.parentElement)"
         >
           Get Started
         </a>
       </div>
     </div>
-    <div
-      id="BFSCard"
-      class="mdl-card mdl-shadow--2dp"
-      style="
-        width: 500px;
-        height: min-content;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-        z-index: 1;
-        visibility: hidden;
-      "
-    >
+    <div id="BFSCard" class="mdl-card mdl-shadow--6dp" style="visibility: hidden">
       <div class="mdl-card__title">
         <h2 class="mdl-card__title-text">Breadth-First Search (Unweighted)</h2>
       </div>
       <div class="mdl-card__supporting-text">
         BFS was originally meant for traversing/searching a tree or graph data structure. It works
-        by checking whether any one of the origin's neighbors is the destination. If so, the algorithm
-        returns true. If not, then it asks one of its neighbors the same question to all of the neighbor's neighbors.
-        This cycle is repeated either iteratively or recursively. For the purposes of
-        this web tool, the algorithm was slightly modified to use what the algorithm learns on its
-        journey in order backtrack its way from the destination to the origin.
-        <a href="https://en.wikipedia.org/wiki/Breadth-first_search" target="_blank">See Wikipedia page</a>
+        by checking whether any one of the origin's neighbors is the destination. If so, the
+        algorithm returns true. If not, then it asks one of its neighbors the same question to all
+        of the neighbor's neighbors. This cycle is repeated either iteratively or recursively. For
+        the purposes of this web tool, the algorithm was slightly modified to use what the algorithm
+        learns on its journey in order backtrack its way from the destination to the origin.
+        <a href="https://en.wikipedia.org/wiki/Breadth-first_search" target="_blank"
+          >See Wikipedia page</a
+        >
       </div>
-      <div class="mdl-card__actions mdl-card--border" style="text-align: center;">
+      <div class="mdl-card__actions mdl-card--border">
         <a
           class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-          style="text-align: center;"
           onclick="confirm(this.parentElement.parentElement)"
         >
           Ok
         </a>
       </div>
     </div>
-    <div
-    id="DSPFCard"
-    class="mdl-card mdl-shadow--2dp"
-    style="
-      width: 500px;
-      height: min-content;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
-      z-index: 1;
-      visibility: hidden;
-    "
-  >
-    <div class="mdl-card__title">
-      <h2 class="mdl-card__title-text">Dijkstra's Shortest Path First Algorithm (Weighted)</h2>
+    <div id="DSPFCard" class="mdl-card mdl-shadow--6dp" style="visibility: hidden">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Dijkstra's Shortest Path First Algorithm (Weighted)</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        DSPF is very similar to BFS in that it asks each of the origin's neighbors the question of
+        whether it's the destination or not, and repeats this iteratively or recursively. The
+        difference, however is that DSPF takes into account so-called "weights", otherwise known as
+        traffic or anything that would slow someone down on the way to their destination. It does
+        this by initializing each node, except the origin, to have a distance of infinity from the
+        origin. The algorithm also uses an array of nodes sorted by their distance from the origin,
+        which gets updated continuously. The algorithm checks the neighbors of the node closest to
+        the start and updates their distances from the origin only if the path to the neighbor is
+        closer than the array says. This distance is the number of steps it takes to get to the node
+        closest to the start, added to the number of steps it takes to get to its neighbor. The
+        second addend will be either 1 or the weight of the weight indicated on the slider. As it
+        turns out, DSPF, or at least a modified version of it, is apparently used by Google Maps.
+        <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank"
+          >See Wikipedia page</a
+        >
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a
+          class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+          onclick="confirm(this.parentElement.parentElement)"
+        >
+          Ok
+        </a>
+      </div>
     </div>
-    <div class="mdl-card__supporting-text">
-      DSPF is very similar to BFS in that it asks each of the origin's neighbors the question of whether it's the 
-      destination or not, and repeats this iteratively or recursively. The difference, however is that DSPF takes into
-      account so-called "weights", otherwise known as traffic or anything that would slow someone down on the way to their
-      destination. It does this by initializing each node, except the origin, to have a distance of infinity from the origin.
-      The algorithm also uses an array of nodes sorted by their distance from the origin, which gets updated continuously. 
-      The algorithm checks the neighbors of the node closest to the start and updates their distances from the origin
-      only if the path to the neighbor is closer than the array says. This distance is the number of steps it takes
-      to get to the node closest to the start, added to the number of steps it takes to get to its neighbor. The second
-      addend will be either 1 or the weight of the weight indicated on the slider. As it turns out,
-      DSPF, or at least a modified version of it, is apparently used by Google Maps.
-      <br><a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank">See Wikipedia page</a>
-    </div>
-    <div class="mdl-card__actions mdl-card--border" style="text-align: center;">
-      <a
-        class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-        style="text-align: center;"
-        onclick="confirm(this.parentElement.parentElement)"
-      >
-        Ok
-      </a>
-    </div>
-  </div>
     <header class="mdl-layout__header">
       <div>
         <a href="https://github.com/RyuseiC/Pathfinding-Visualizer" target="_blank">About</a>
@@ -142,7 +100,7 @@
         <div class="mdl-layout-spacer"></div>
         <div
           class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height"
-          style="width: 350px;"
+          style="width: 350px"
         >
           <input id="selected" type="text" value="" class="mdl-textfield__input" readonly />
           <input type="hidden" value="" name="algorithm" />
@@ -150,9 +108,7 @@
           <label for="algorithm" class="mdl-textfield__label">Algorithm</label>
           <ul for="algorithm" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
             <li class="mdl-menu__item" data-val="BFS">Breadth-First Search Algorithm</li>
-            <li class="mdl-menu__item" data-val="DSPF">
-              Dijkstra's Shortest Path First Algorithm
-            </li>
+            <li class="mdl-menu__item" data-val="DSPF">Dijkstra's Shortest Path First Algorithm</li>
             <li class="mdl-menu__item" data-val="ASTAR">A* (A-Star) Search Algorithm</li>
             <li class="mdl-menu__item" data-val="">Depth-First Search Maze Generator</li>
           </ul>
@@ -195,13 +151,13 @@
       <div class="mdl-layout__header-row">
         <table>
           <tr>
-            <td class="start noHighlight" style="border: none;">&nbsp;</td>
+            <td class="start noHighlight" style="border: none">&nbsp;</td>
           </tr>
         </table>
         &#160;Start Node&#160;
         <table>
           <tr>
-            <td class="goal noHighlight" style="border: none;">&nbsp;</td>
+            <td class="goal noHighlight" style="border: none">&nbsp;</td>
           </tr>
         </table>
         &#160;Goal Node&#160;
@@ -213,7 +169,7 @@
         &#160;<span id="wallLabel" class="emphasize">Wall Node</span>&#160;
         <table>
           <tr>
-            <td class="weight noHighlight" style="border: none;">&nbsp;</td>
+            <td class="weight noHighlight" style="border: none">&nbsp;</td>
           </tr>
         </table>
         &#160;<span id="weightLabel">Weight Node</span>&#160;
@@ -225,7 +181,7 @@
         &#160;Unvisited Node&#160;
         <table>
           <tr>
-            <td class="visited noHighlight" style="border: none;">&nbsp;</td>
+            <td class="visited noHighlight" style="border: none">&nbsp;</td>
           </tr>
         </table>
         &#160;Visited Node&#160;
@@ -236,7 +192,7 @@
         </table>
         &#160;Shortest-path Node
         <div class="mdl-layout-spacer"></div>
-        <div id="slider" style="width: 300px;">
+        <div id="slider" style="width: 300px">
           <center>
             Weight
             <input
