@@ -16,11 +16,9 @@ var gameState = {
   movingStartOrGoalNodes: { isMoving: false, isMovingStartNode: false, isMovingGoalNode: false },
 };
 
-drawGrid(totalRows, totalCols, gameState);
+// Probably rename visualize, visualizeAlgorithm, convertJSToDOM
 
-// Bug: Events fire twice
-// Show intro dialog cards on first visit only, click info when no algorithm is selected to show again
-// Maze generator
+drawGrid(totalRows, totalCols, gameState);
 
 function convertDOMToJS(grid, gameState) {
   let rows = grid.children;
@@ -50,15 +48,17 @@ function convertDOMToJS(grid, gameState) {
 }
 
 function convertJSToDOM(gameState, nodeObjectsInVistedOrder) {
+  let totalDistance = 0;
+
+  if (gameState.visualizingMaze) {
+
+  }
   // If an algorithm has been visualized and the board has not been cleared, then do instant visualization.
   // Clear previous visualization first. Then, iterate through the nodeObjectsInVistedOrder array to mark as
   // instantVisited. Then, take the goalNodeObject and iterate through its previousNodeObjects to get the reverse
   // shortest path. Reverse, then add instantShortestPath class to all of them.
-  if (gameState.hasVisualized) {
+  else if (gameState.hasVisualized) {
     for (coordinates in gameState.nodeObjects) {
-      // if (getNode(gameState.nodeObjects[coordinates]).classList.contains('visited')) {
-      //    getNode(gameState.nodeObjects[coordinates]).style.webkitAnimation = 'none'
-      // }
       getNode(gameState.nodeObjects[coordinates]).classList.remove(
         'shortestPath',
         'instantShortestPath',
@@ -107,6 +107,7 @@ function convertJSToDOM(gameState, nodeObjectsInVistedOrder) {
 
       nodeObjectsInShortestPathOrder.forEach((shortestPathNodeObject, i) => {
         setTimeout(() => {
+          totalDistance += nodeObjectsInShortestPathOrder[i].weight ? gameState.weightOfWeight : 1;
           getNode(shortestPathNodeObject).classList.remove('visited');
           getNode(shortestPathNodeObject).classList.add('shortestPath');
         }, 50 * i);
@@ -116,10 +117,12 @@ function convertJSToDOM(gameState, nodeObjectsInVistedOrder) {
         gameState.hasComputed = false;
         gameState.isRunning = false;
         toggleButtons(gameState);
+        setTimeout(() => {
+          alert(`It took ${totalDistance} steps to get to your destination.`)
+        }, 20 * nodeObjectsInShortestPathOrder.length);
       }, 55 * nodeObjectsInShortestPathOrder.length);
     }, 5 * nodeObjectsInVistedOrder.length);
   }
-  // convertDOMToJS(grid, gameState);
   return gameState;
 }
 
@@ -173,7 +176,6 @@ function getRowCol(node, totalCols) {
 function drawGrid(totalRows, totalCols, gameState) {
   let grid = document.getElementById('grid');
   grid.innerHTML = '';
-  grid.className = 'noHighlight';
   for (let r = 0; r < totalRows; r++) {
     let row = document.createElement('tr');
     grid.appendChild(row);

@@ -17,7 +17,6 @@ function dspf(gameState, totalRows, totalCols) {
   for (coordinates in gameState.nodeObjects) {
     if (!gameState.nodeObjects[coordinates].start) {
       gameState.nodeObjects[coordinates].distanceFromStart = Infinity;
-      // nodeObjectsPriorityQueue.push(gameState.nodeObjects[coordinates]);
     }
   }
   gameState.startNodeObject.distanceFromStart = 0;
@@ -37,6 +36,7 @@ function dspf(gameState, totalRows, totalCols) {
       totalRows,
       totalCols
     );
+    
     for (let i = 0; i < unvisitedNeighborNodeObjects.length; i++) {
       let neighborNodeObject = unvisitedNeighborNodeObjects[i];
       
