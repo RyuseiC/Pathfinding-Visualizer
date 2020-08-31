@@ -1,14 +1,14 @@
 // Similar to BFS, but needs to keep track of distances from start node to current neighbors/nodes.
-// Add startNodeObject to nodeObjectsPriorityQueue to be the first nodeObject to be visited. Set the distanceFromStart
-// of every startNodeObject to be 0 and every other nodeObject to be Infinity.
-// If the first entry of nodeObjectsPriorityQueue a.k.a. minDistanceNodeObject is Infinity steps away from the
-// startNodeObject, then the path is impossible. Otherwise, mark it as visited and push it to the visitedNodeObjects.
-// Then, for each of its unvisitedNeighborNodeObjects, calculate the distanceFromStart to the neighbor is
-// less than the neighbor's current distanceFromStart AND whether it hasn't been visited yet. If so, then the new
-// distanceFromStart of the neighbor will be the one previously calculated, the minDistanceNodeObject
-// becomes its previousNodeObject, and the neighbor is added to the queue. Otherwise means that traveling from the
-// minDistanceNode to its neighbor takes longer than some other path to it from a different node, thus not the shortest
-// path to get to it, so don't want to take that route.
+// Add startNodeObject to nodeObjectsPriorityQueue to be the first nodeObject to be visited. Set the
+// distanceFromStart of startNodeObject to be 0 and every other nodeObject to be Infinity.
+// Remove the first nodeObject from the queue, mark it as visited, and push it to the
+// visitedNodeObjects. If it is the goal, return visitedNodeObjects. Otherwise, for each of its
+// unvisitedNeighborNodeObjects, calculate the potentialPathDistance. If potentialPathDistance is
+// less than the neighbor's current distanceFromStart, then update distanceFromStart,
+// minDistanceNodeObject, and add the neighbor to the queue. Otherwise, it means that traveling
+// from the minDistanceNode to its neighbor takes longer than some other path to it from a
+// different node, thus not the shortest path to get to it, so do not want to take that route.
+// Lastly, sort by each node's distanceFromStart, then loop.
 function dspf(gameState, totalRows, totalCols) {
   let visitedNodeObjects = [];
   let nodeObjectsPriorityQueue = [];
@@ -25,9 +25,9 @@ function dspf(gameState, totalRows, totalCols) {
     let minDistanceNodeObject = nodeObjectsPriorityQueue.shift();
     minDistanceNodeObject.isVisited = true;
     visitedNodeObjects.push(minDistanceNodeObject);
-    
-    if (minDistanceNodeObject.distanceFromStart === Infinity) {
-      return null;
+
+    if (minDistanceNodeObject.goal) {
+      return visitedNodeObjects;
     }
 
     let unvisitedNeighborNodeObjects = getUnvisitedNeighborNodeObjects(
@@ -36,14 +36,9 @@ function dspf(gameState, totalRows, totalCols) {
       totalRows,
       totalCols
     );
-    
+
     for (let i = 0; i < unvisitedNeighborNodeObjects.length; i++) {
       let neighborNodeObject = unvisitedNeighborNodeObjects[i];
-      
-      if (neighborNodeObject.goal) {
-        neighborNodeObject.previousNodeObject = minDistanceNodeObject;
-        return visitedNodeObjects;
-      }
 
       let potentialPathDistance =
         minDistanceNodeObject.distanceFromStart +

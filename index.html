@@ -71,14 +71,43 @@
         difference, however is that DSPF takes into account so-called "weights", otherwise known as
         traffic or anything that would slow someone down on the way to their destination. It does
         this by initializing each node, except the origin, to have a distance of infinity from the
-        origin. The algorithm also uses an array of nodes sorted by their distance from the origin,
-        which gets updated continuously. The algorithm checks the neighbors of the node closest to
-        the start and updates their distances from the origin only if the path to the neighbor is
-        closer than the array says. This distance is the number of steps it takes to get to the node
-        closest to the start, added to the number of steps it takes to get to its neighbor. The
-        second addend will be either 1 or the weight of the weight indicated on the slider. As it
-        turns out, DSPF, or at least a modified version of it, is apparently used by Google Maps.
+        origin. The algorithm also uses an array of nodes sorted by each of their distances from the
+        origin, which gets updated and sorted with every iteration. The algorithm checks the
+        neighbors of the node closest to the origin and updates their distances from the origin only
+        if the path to the current neighbor is closer than the array says. This distance is the
+        number of steps it takes to get to the node closest to the origin, added to the number of
+        steps it takes to get to its current neighbor. The second addend will be either 1 or the
+        weight of the weight indicated on the slider. As it turns out, DSPF, or at least a modified
+        version of it, is apparently used by Google Maps.
         <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank"
+          >See Wikipedia page</a
+        >
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a
+          class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+          onclick="confirm(this.parentElement.parentElement)"
+        >
+          Ok
+        </a>
+      </div>
+    </div>
+    <div id="ASTARCard" class="mdl-card mdl-shadow--6dp" style="visibility: hidden">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">A* (A-Star) Search Algorithm (Weighted)</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        A* is very similar to DSPF in that it keeps track of each node's distance from the origin.
+        The difference, however is that A* takes into account each node's distance from the goal as
+        well. Using both the distance from the origin and distance from the goal, of a particular
+        node, the algorithm can tell which path takes the least steps to get to the goal. Similar to
+        DSPF, A* uses an array of nodes sorted by the nodes' total distance (distance from origin +
+        distance from goal), which gets updated and sorted with every iteration. The algorithm
+        checks the neighbors of the node with the least total distance, and updates their distances
+        from the origin and total distance, only if the distance from the origin to the current
+        neighbor is closer than the array says. Hence, the pattern that shoots towards the goal.
+        Furthermore, thanks to this algorithm's heuristic, it is faster than DSPF.
+        <a href="https://en.wikipedia.org/wiki/A*_search_algorithm" target="_blank"
           >See Wikipedia page</a
         >
       </div>

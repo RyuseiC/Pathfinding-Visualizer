@@ -21,7 +21,7 @@ function visualizeAlgorithm(gameState) {
   } else if (gameState.algorithm === 'DSPF') {
     nodeObjectsInVisitedOrder = dspf(gameState, totalRows, totalCols);
   } else if (gameState.algorithm === 'ASTAR') {
-    nodeObjectsInVisitedOrder = astar(gameState);
+    nodeObjectsInVisitedOrder = astar(gameState, totalRows, totalCols);
   }
   gameState.hasComputed = true;
   if (nodeObjectsInVisitedOrder !== null) {
@@ -56,7 +56,6 @@ function getUnvisitedNeighborNodeObjects(nodeObject, nodeObjects, totalRows, tot
   let rightNeighborNodeObject = nodeObject.col + 1 === totalCols ? null : nodeObjects[[nodeObject.row, nodeObject.col + 1]];
   neighborNodeObjects.push(topNeighborNodeObject, bottomNeighborNodeObject, leftNeighborNodeObject, rightNeighborNodeObject);
   
-  console.trace(neighborNodeObjects);
   return neighborNodeObjects.filter(
     (neighborNodeObject) => neighborNodeObject !== null && !neighborNodeObject.isVisited && !neighborNodeObject.wall
   );
