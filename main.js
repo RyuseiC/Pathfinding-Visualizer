@@ -8,6 +8,7 @@ var gameState = {
   goalNodeObject: -1,
   hasComputed: false,
   hasVisualized: false,
+  visualizingMaze: false,
   isRunning: false,
   isDrawing: false,
   selectedWalls: true,
@@ -16,7 +17,15 @@ var gameState = {
   movingStartOrGoalNodes: { isMoving: false, isMovingStartNode: false, isMovingGoalNode: false },
 };
 
-// Probably rename visualize, visualizeAlgorithm, convertJSToDOM
+/**
+ * TODO: Fix visualize function
+ * TODO: Fix timing of total distance alert
+ * TODO: Probably rename visualize, visualizeAlgorithm, convertJSToDOM
+ * TODO: Separate out animations from convertJSToDOM
+ * TODO: Redo comments for conevrtDOMTJS and convertJSToDOM
+ * TODO: Write more comments
+ * TODO: Kruskal(?) maze generator
+ */
 
 drawGrid(totalRows, totalCols, gameState);
 
@@ -38,7 +47,7 @@ function convertDOMToJS(grid, gameState) {
         gameState.startNodeObject = nodeObject;
       } else if (nodeClassList.contains('goal')) {
         gameState.goalNodeObject = nodeObject;
-      } else if (nodeClassList.contains('weight') && gameState.algorithm == 'BFS') {
+      } else if (nodeClassList.contains('weight') && gameState.algorithm === 'BFS') {
         nodeObject.weight = false;
       }
     }
@@ -49,9 +58,37 @@ function convertDOMToJS(grid, gameState) {
 
 function convertJSToDOM(gameState, nodeObjectsInVistedOrder) {
   let totalDistance = 0;
+  console.log('nodeObjectsInVistedOrder :>> ', nodeObjectsInVistedOrder);
 
   if (gameState.visualizingMaze) {
+    console.log('converting');
+    let i = 0;
+    for (coordinates in gameState.nodeObjects) {
+      let node = getNode(gameState.nodeObjects[coordinates]);
+      if (!node.className.includes('start') && !node.className.includes('goal')) {
+        node.className = '';
+      }
+      let nodeObject = gameState.nodeObjects[coordinates]
+      console.log(nodeObjectsInVistedOrder.includes(nodeObject))
+      setTimeout(() => {
+        if (
+          !nodeObjectsInVistedOrder.includes(nodeObject) &&
+          !node.className.includes('start') &&
+          !node.className.includes('goal')
+        ) {
+          node.className = 'wall';
+        }
+      }, 5 * i);
+      i++;
+    };
 
+    setTimeout(() => {
+      gameState.hasVisualized = true;
+      gameState.hasComputed = false;
+      gameState.isRunning = false;
+      gameState.visualizingMaze = false;
+      toggleButtons(gameState);
+    }, 10 * nodeObjectsInVistedOrder.length);
   }
   // If an algorithm has been visualized and the board has not been cleared, then do instant visualization.
   // Clear previous visualization first. Then, iterate through the nodeObjectsInVistedOrder array to mark as
@@ -91,7 +128,7 @@ function convertJSToDOM(gameState, nodeObjectsInVistedOrder) {
     nodeObjectsInVistedOrder.forEach((visitedNodeObject, i) => {
       setTimeout(() => {
         getNode(visitedNodeObject).classList.add('visited');
-      }, 5 * i);
+      }, 4 * i);
     });
 
     setTimeout(() => {
@@ -107,10 +144,10 @@ function convertJSToDOM(gameState, nodeObjectsInVistedOrder) {
 
       nodeObjectsInShortestPathOrder.forEach((shortestPathNodeObject, i) => {
         setTimeout(() => {
-          totalDistance += nodeObjectsInShortestPathOrder[i].weight ? gameState.weightOfWeight : 1;
+          totalDistance += shortestPathNodeObject.weight ? gameState.weightOfWeight : 1;
           getNode(shortestPathNodeObject).classList.remove('visited');
           getNode(shortestPathNodeObject).classList.add('shortestPath');
-        }, 50 * i);
+        }, 30 * i);
       });
       setTimeout(() => {
         gameState.hasVisualized = true;
@@ -118,7 +155,7 @@ function convertJSToDOM(gameState, nodeObjectsInVistedOrder) {
         gameState.isRunning = false;
         toggleButtons(gameState);
         setTimeout(() => {
-          alert(`It took ${totalDistance} steps to get to your destination.`)
+          alert(`It took ${totalDistance - 1} steps to get to your destination.`);
         }, 20 * nodeObjectsInShortestPathOrder.length);
       }, 55 * nodeObjectsInShortestPathOrder.length);
     }, 5 * nodeObjectsInVistedOrder.length);
@@ -127,13 +164,15 @@ function convertJSToDOM(gameState, nodeObjectsInVistedOrder) {
 }
 
 function visualize(gameState) {
-  if (gameState.algorithm !== '') {
-    if (gameState.algorithm === 'Breadth-First Search Algorithm') {
-      gameState.algorithm = 'BFS';
-    } else if (gameState.algorithm === "Dijkstra's Shortest Path First Algorithm") {
-      gameState.algorithm = 'DSPF';
-    } else if (gameState.algorithm === 'A* (A-Star) Search Algorithm') {
-      gameState.algorithm = 'ASTAR';
+  let algorithm = gameState.algorithm;
+  if (algorithm !== '') {
+    // Remove weights if algorithm is BFS because it is an unweighted algorithm.
+    if (algorithm === 'BFS') {
+      for (coordinates in gameState.nodeObjects) {
+        getNode(gameState.nodeObjects[coordinates]).classList.contains('weight')
+          ? getNode(gameState.nodeObjects[coordinates]).classList.remove('weight')
+          : null;
+      }
     }
     gameState.isRunning = true;
     gameState.hasVisualized = false;
@@ -205,14 +244,23 @@ function drawGrid(totalRows, totalCols, gameState) {
       }
     }
   }
-  document.pointerEvents = 'none';
-  document.addEventListener('keydown', (keyboardEvent) => nodeKeydown(keyboardEvent, gameState));
   convertDOMToJS(grid, gameState);
 }
 
+// Event handlers for info button, dropdown menu, and slider
+document.addEventListener('keydown', (keyboardEvent) => nodeKeydown(keyboardEvent, gameState));
 document.getElementById('info').addEventListener('click', () => showInfo(gameState));
 document.getElementById('selected').addEventListener('change', () => changeAlgorithm(gameState));
 document.getElementById('weightSlider').addEventListener('change', () => changeWeight(gameState));
+// Event handlers for visualize, reset grid, clear walls and weights, and clear path buttons.
+document.getElementById('visualize').addEventListener('click', () => visualize(gameState));
+document
+  .getElementById('resetGrid')
+  .addEventListener('click', () => resetGrid(gameState, totalRows, totalCols));
+document
+  .getElementById('clearWallsAndWeights')
+  .addEventListener('click', () => clearWallsAndWeights(gameState));
+document.getElementById('clearPath').addEventListener('click', () => clearPath(gameState));
 
 function confirm(card) {
   card.style.visibility = 'hidden';
@@ -230,7 +278,7 @@ function showInfo(gameState) {
     card = document.getElementById('ASTARCard');
   }
 
-  let cards = document.getElementsByClassName('mdl-card')
+  let cards = document.getElementsByClassName('mdl-card');
   for (let i = 0; i < cards.length; i++) {
     if (cards[i] !== card) {
       cards[i].style.visibility = 'hidden';
@@ -241,31 +289,30 @@ function showInfo(gameState) {
 }
 
 function changeAlgorithm(gameState) {
-  gameState.algorithm = document.getElementById('selected').value;
-  if (gameState.algorithm === 'Breadth-First Search Algorithm') {
+  let algorithm = document.getElementById('selected').value;
+  // For BFS, an unweighted algorithm, handle legend for weight and wall nodes as soon as BFS is
+  // selected. Also, make toggle weight drawing off and wall drawing on.
+  if (algorithm === 'Breadth-First Search Algorithm') {
     gameState.algorithm = 'BFS';
     gameState.selectedWalls = true;
     gameState.selectedWeights = false;
 
     let weightLabel = document.getElementById('weightLabel');
     weightLabel.classList.remove('emphasize');
+    weightLabel.classList.add('unweighted');
 
     let wallLabel = document.getElementById('wallLabel');
     wallLabel.classList.add('emphasize');
-    // For BFS, an unweighted algorithm, eliminate weight nodes as soon as it is selected.
-    for (coordinates in gameState.nodeObjects) {
-      gameState.nodeObjects[coordinates].weight
-        ? getNode(gameState.nodeObjects[coordinates]).classList.remove('weight')
-        : null;
-    }
-    weightLabel.classList.add('unweighted');
+
     convertDOMToJS(grid, gameState);
-  } else if (gameState.algorithm === "Dijkstra's Shortest Path First Algorithm") {
+  } else if (algorithm === "Dijkstra's Shortest Path First Algorithm") {
     gameState.algorithm = 'DSPF';
     document.getElementById('weightLabel').classList.remove('unweighted');
-  } else if (gameState.algorithm === 'A* (A-Star) Search Algorithm') {
+  } else if (algorithm === 'A* (A-Star) Search Algorithm') {
     gameState.algorithm = 'ASTAR';
     document.getElementById('weightLabel').classList.remove('unweighted');
+  } else if (algorithm === 'Depth-First Search Maze Generator') {
+    gameState.algorithm = 'DFSMaze';
   }
 }
 
@@ -275,16 +322,6 @@ function changeWeight(gameState) {
     instantVisualizeAlgorithm(convertDOMToJS(grid, gameState));
   }
 }
-
-// Control buttons
-document.getElementById('visualize').addEventListener('click', () => visualize(gameState));
-document
-  .getElementById('resetGrid')
-  .addEventListener('click', () => resetGrid(gameState, totalRows, totalCols));
-document
-  .getElementById('clearWallsAndWeights')
-  .addEventListener('click', () => clearWallsAndWeights(gameState));
-document.getElementById('clearPath').addEventListener('click', () => clearPath(gameState));
 
 function resetGrid(gameState, totalRows, totalCols) {
   document.getElementById('grid').innerHTML = '';
@@ -374,10 +411,15 @@ function nodeKeydown(keyboardEvent, gameState) {
   if (keyboardEvent.keyCode === 87 && gameState.algorithm !== 'BFS') {
     gameState.selectedWeights = selectedWeights ? false : true;
     let weightLabel = document.getElementById('weightLabel');
-    gameState.selectedWeights ? weightLabel.classList.add('emphasize') : weightLabel.classList.remove('emphasize');
+    gameState.selectedWeights
+      ? weightLabel.classList.add('emphasize')
+      : weightLabel.classList.remove('emphasize');
+
     let wallLabel = document.getElementById('wallLabel');
     gameState.selectedWalls = selectedWalls ? false : true;
-    gameState.selectedWalls ? wallLabel.classList.add('emphasize') : wallLabel.classList.remove('emphasize');
+    gameState.selectedWalls
+      ? wallLabel.classList.add('emphasize')
+      : wallLabel.classList.remove('emphasize');
   }
 }
 

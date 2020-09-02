@@ -92,7 +92,7 @@ td {
   animation-play-state: running;
 }
 
-[class="weight"], .weight.noHighlight {
+[class="weight"], .weight.noHighlight, .weight.visited, .weight.instantVisited {
   background-color: transparent;
   background-image: url('images/weight.png');
   background-position: center;
