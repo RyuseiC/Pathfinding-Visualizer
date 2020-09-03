@@ -19,7 +19,7 @@ var gameState = {
 
 /**
  * TODO: Fix visualize function
- * TODO: Fix timing of total distance alert
+ * TODO: Fix timing of total distance alert and button toggle
  * TODO: Probably rename visualize, visualizeAlgorithm, convertJSToDOM
  * TODO: Separate out animations from convertJSToDOM
  * TODO: Redo comments for conevrtDOMTJS and convertJSToDOM
@@ -276,6 +276,8 @@ function showInfo(gameState) {
     card = document.getElementById('DSPFCard');
   } else if (gameState.algorithm === 'ASTAR') {
     card = document.getElementById('ASTARCard');
+  } else if (gameState.algorithm === 'DFSMaze') {
+    card = document.getElementById('DFSMazeCard');
   }
 
   let cards = document.getElementsByClassName('mdl-card');

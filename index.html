@@ -120,6 +120,37 @@
         </a>
       </div>
     </div>
+    <div id="DFSMazeCard" class="mdl-card mdl-shadow--6dp" style="visibility: hidden">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Depth-First Search Maze Generator</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        DFS is an algorithm similar to BFS, except instead of checking all current neighbors in
+        order, it checks one neighbor and iteratively or recursively checks its neighbors until the
+        algorithm has checked as deep as possible on a single node, at which point the algorithm
+        backtracks to find another way to go. Hence "depth-first" as opposed to "breadth-first"
+        (where breadth is referring to the breadth of a node, which are all its neighbors). To
+        generate a maze using DFS however, there is a slight variation. It involves starting with a
+        random node (which in this case is the start node) and choosing a single neighbor at random on
+        every function call. Furthermore, it assumes that the grid is filled with walls, and
+        everytime the function is called and there is a valid (wall) square two squares in a random
+        direction from the current square, then a path between the two squares gets created, and DFS
+        is invoked on that square that is two squares away.
+        <a
+          href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Randomized_depth-first_search"
+          target="_blank"
+          >See Wikipedia page</a
+        >
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a
+          class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+          onclick="confirm(this.parentElement.parentElement)"
+        >
+          Ok
+        </a>
+      </div>
+    </div>
     <header class="mdl-layout__header">
       <div>
         <a href="https://github.com/RyuseiC/Pathfinding-Visualizer" target="_blank">About</a>
