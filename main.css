@@ -92,7 +92,7 @@ td {
   animation-play-state: running;
 }
 
-[class="weight"], .weight.noHighlight, .weight.visited, .weight.instantVisited {
+[class="weight"], .weight.noHighlight {
   background-color: transparent;
   background-image: url('images/weight.png');
   background-position: center;
@@ -100,10 +100,23 @@ td {
   background-size: contain;
   animation-name: startGoalWallWeightNodeAnimation;
   animation-duration: 350ms;
+  animation-timing-function: linear;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
 
 .weight {
   background-color: transparent;
+  background-image: url('images/weight.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.weight.visited, .weight.instantShortestPath {
   background-image: url('images/weight.png');
   background-position: center;
   background-repeat: no-repeat;

@@ -18,6 +18,7 @@ var gameState = {
 };
 
 /**
+ * TODO: Fix weight CSS
  * TODO: Fix visualize function
  * TODO: Fix timing of total distance alert and button toggle
  * TODO: Probably rename visualize, visualizeAlgorithm, convertJSToDOM
